@@ -15,33 +15,54 @@
         body {
             align-items: center;
             display: flex;
+            font-family: monospace, sans-serif;
             height: 100vh;
             justify-content: center;
-            width: 100vw;   
+            text-align: center;
+            width: 100vw;
         }
 
-        div {
+        #main-div {
             align-items: center;
             background-color: #2E2E2E;
-            background-color: orange;
+            background-color: rgb(247, 145, 145);
             border: 2px solid black;
-            color: white;
             display: flex;
             flex-direction: column;
-            font-style: italic;
-            gap: 0.5rem;
-            height: 150px;
+            gap: 2.5rem;
+            height: 350px;
             justify-content: center;
-            width: 500px;
+            width: 600px;
         }
-        
+
+        #btn-div {
+            display: flex;
+            gap: 5rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #btn-div button {
+            background-color: indianred;
+            border: 0;
+            font-weight: bold;
+            height: 2rem;
+            padding: 0.5rem;
+        }
+
     </style>
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div>
-        <span style="font-size: 2rem; font-weight: bold;">Go to the console to play!</span>
-        <span>(Press F12.)</span>
+    <div id="main-div">
+        <h1>Let's play 'rock, paper, scissors'!</h1>
+        <div id="btn-div">
+            <button>Rock</button>
+            <button>Paper</button>
+            <button>Scissors</button>
+        </div>
+        <p>Press a button to start...</p>
+        <span hidden></span>
     </div>
 </body>
 </html>

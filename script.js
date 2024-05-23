@@ -1,6 +1,23 @@
 
-function capitalize(string) {
-    return string.substr(0, 1).toUpperCase().concat(string.substr(1).toLowerCase());
+let humanScore = 0;
+let computerScore = 0;
+
+const buttons = document.querySelectorAll("button");
+const text = document.querySelector("p");
+const span = document.querySelector("span");
+
+buttons.forEach(button => button.addEventListener("click", playingGame));
+
+function playingGame(event) {
+    
+    span.removeAttribute("hidden");
+    playRound(event.target.textContent, getComputerChoice());
+
+    if (humanScore === 5 || computerScore === 5) {
+        playFinish();
+        buttons.forEach(button => button.removeEventListener("click", playingGame));
+    }
+    
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -10,14 +27,14 @@ function playRound(humanChoice, computerChoice) {
         (humanChoice === "Paper" && computerChoice === "Paper") ||
         (humanChoice === "Scissors" && computerChoice === "Scissors")) {
 
-        console.log("%c And the winner is... Well, what do you know, it was a tie!", "color: green");
+        text.textContent = "And the winner is... Well, what do you know, it was a tie!";
 
     } else if (
         (humanChoice === "Rock" && computerChoice === "Scissors") ||
         (humanChoice === "Paper" && computerChoice === "Rock") ||
         (humanChoice === "Scissors" && computerChoice === "Paper")) {
         
-        console.log("%c And the winner is... You!", "color: green");
+        text.textContent = "And the winner is... You!";
         humanScore++;
 
     } else if (
@@ -25,48 +42,24 @@ function playRound(humanChoice, computerChoice) {
         (computerChoice === "Paper" && humanChoice === "Rock") ||
         (computerChoice === "Scissors" && humanChoice === "Paper")) {
         
-        console.log("%c And the winner is... the computer!", "color: green");
+        text.textContent = "And the winner is... the computer!";
         computerScore++;
     }
+
+    span.textContent = `\n Human: ${humanScore}\n Computer: ${computerScore}`;
 }
 
-function playGame() {
-    for (let i = 1; i <= 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
-    }
+function playFinish() {
+    
+    text.style.color = "red";
 
     if (humanScore > computerScore) {
-        console.log("%c And the FINAL winner is... YOU! You won with a score of " + humanScore + "/5!", "color: orange")
+        text.textContent = "And the FINAL winner is... YOU! You won with a score of " + humanScore + "/5!"
     } else if (humanScore < computerScore) {
-        console.log("%c And the FINAL winner is... the COMPUTER! You lost with a score of " + humanScore + "/5!", "color: orange")
+        text.textContent = "And the FINAL winner is... the COMPUTER! You lost with a score of " + humanScore + "/5!"
     } else {
-        console.log("%c And the FINAL winner is... NONE! It was a tie.", "color: orange")
+        text.textContent = "And the FINAL winner is... NONE! It was a tie.";
     }
-    
-}
-
-function getHumanChoice() {
-    let humanChoice = prompt("Rock, paper, scissors?", "");
-    
-    while (humanChoice === null) {
-        console.error("%c NOOOOooooO!", "font-weight: bold", "You must input a correct value!");
-        humanChoice = prompt("Rock, paper, scissors?", "");
-    }
-    
-    humanChoice = capitalize(humanChoice);
-    
-    while (!(humanChoice === "Rock" || humanChoice === "Paper" || humanChoice === "Scissors")) {
-        humanChoice = prompt("You can only write rock, paper, or scissors.", "");
-        
-        while (humanChoice === null) {
-            console.error("%c NOOOOooooO!", "font-weight: bold", "You must input a correct value!");
-            humanChoice = prompt("Rock, paper, scissors?", "");
-        }
-        
-        humanChoice = capitalize(humanChoice);
-    }
-
-    return humanChoice;
 }
 
 function getComputerChoice() {
@@ -75,13 +68,3 @@ function getComputerChoice() {
     let computerChoice = listChoices[randomNumber];
     return computerChoice;
 }
-
-let humanScore = 0;
-let computerScore = 0;
-console.log("%c Press Enter in the document to begin!", "color: orange")
-
-document.addEventListener('keypress', e => {
-    if (e.key === "Enter") {
-        playGame();
-    }
-});
